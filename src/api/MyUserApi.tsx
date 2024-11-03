@@ -119,7 +119,6 @@ export const useUpdateMyUser = () => {
   const {
     mutateAsync: updateUser,
     isLoading, isSuccess,
-    isError,
     error, 
     reset 
    } = useMutation(updataMyUserRequest);
