@@ -28,3 +28,12 @@ export type Restaurant = {
   lastUpdated: string;
 };
 
+export type RestaurantSearchResponse = {
+  data: Restaurant[];
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+  }; //also defined on the backend. but for flexibility and individuality , created it here to.
+}
+
