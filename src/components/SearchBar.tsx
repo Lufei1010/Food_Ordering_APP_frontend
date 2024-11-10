@@ -15,6 +15,7 @@ const formSchema = z.object({
 
 export type SearchForm = z.infer<typeof formSchema>;
 
+// Defines props to configure search behavior and reset functionality.
 type Props = {
   //prop at the home page
   onSubmit: (formData: SearchForm) => void;
@@ -23,6 +24,7 @@ type Props = {
   searchQuery: string;
 };
 
+// Form Configuration
 const SearchBar = ({ onSubmit, onReset, placeholder, searchQuery }: Props) => {
   const form = useForm<SearchForm>({
     resolver: zodResolver(formSchema),
@@ -45,6 +47,7 @@ const SearchBar = ({ onSubmit, onReset, placeholder, searchQuery }: Props) => {
     }
   };
 
+  // Render the search bar component
   return (
     <Form {...form}>
       <form
