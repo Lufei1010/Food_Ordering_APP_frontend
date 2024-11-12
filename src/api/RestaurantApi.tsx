@@ -14,6 +14,7 @@ export const useSearchRestaurants = (
     params.set("searchQuery", searchState.searchQuery); // Add searchQuery to the request parameters
     params.set("page", searchState.page.toString()); // Add page to the request parameters
     params.set("selectedCuisines", searchState.selectedCuisines.join(",")); // array needs , ; Add selected cuisines to the request parameters
+    params.set("sortOption", searchState.sortOption)
        console.log(
          "Full API request URL:",
          `${API_BASE_URL}/api/restaurant/search/${city}?${params.toString()}` // <-- Edited part
