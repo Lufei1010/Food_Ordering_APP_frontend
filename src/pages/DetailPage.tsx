@@ -3,10 +3,11 @@ import MenuItem from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { MenuItem as MenuItemType } from "../types";
+import CheckoutButton from "@/components/CheckoutButton";
 
 export type CartItem = {
   _id: string;
@@ -18,7 +19,10 @@ const DetailPage = () => {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetMyRestaurants(restaurantId);
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const storedCartItems = sessionStorage.getItem(`cartItems-${restaurantId}`);
+    return storedCartItems? JSON.parse(storedCartItems) : [];
+  });
   //1. Check if the item is already in the cart;
   //2. if the item is in cart, update the quantity;
   // 3. if item is not in cart, add it as a new item
@@ -47,6 +51,11 @@ const DetailPage = () => {
           },
         ];
       }
+           sessionStorage.setItem(
+             `cartItems-${restaurantId}`,
+             JSON.stringify(updatedCartItems)
+           );
+      
       return updatedCartItems;
     });
   };
@@ -98,6 +107,9 @@ const DetailPage = () => {
               cartItems={cartItems}
               removeFromCart={removeFromCart}
             />
+            <CardFooter>
+              <CheckoutButton />
+            </CardFooter>
           </Card>
         </div>
       </div>
