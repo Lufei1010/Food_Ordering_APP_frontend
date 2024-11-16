@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { StringValidation, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -25,26 +25,34 @@ const formSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-type userFormData = z.infer<typeof formSchema>; // Type inferred from the schema
+export type UserFormData = z.infer<typeof formSchema>; // Type inferred from the schema
 
 //create actual form component below
 // Props that the UserProfileForm expects to receive
 type Props = {
   currentUser: User;
-  onSave: (userProfileData: userFormData) => void; // Callback when form is submitted
+  onSave: (userProfileData: UserFormData) => void; // Callback when form is submitted
   isLoading: boolean; // Boolean to show loading state
+  title?: string;
+  buttonText?: string;
 };
 
- // Initialize form with validation using react-hook-form and zodResolver
-const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
-  const form = useForm<userFormData>({
+// Initialize form with validation using react-hook-form and zodResolver
+const UserProfileForm = ({
+  onSave,
+  isLoading,
+  currentUser,
+  title = "User Profile",
+  buttonText = "Submit",
+}: Props) => {
+  const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema), // handle validation
     defaultValues: currentUser, // prefill form with current user data
   });
 
   useEffect(() => {
     form.reset(currentUser);
-  }, [ currentUser, form ]);
+  }, [currentUser, form]);
 
   return (
     <Form {...form}>
@@ -53,7 +61,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
         className="space-y-4 bg-gray-50 rounded-lg md:p-10"
       >
         <div>
-          <h2 className="text-2xl font-bold"> User Profile Form </h2>
+          <h2 className="text-2xl font-bold"> {title} </h2>
           <FormDescription>
             View and change your profile information here
           </FormDescription>
@@ -131,7 +139,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
           <LoadingButton />
         ) : (
           <Button type="submit" className="bg-orange-500">
-            Submit
+            {buttonText}
           </Button>
         )}
       </form>
