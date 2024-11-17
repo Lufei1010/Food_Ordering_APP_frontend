@@ -9,8 +9,9 @@ import { useGetMyUser } from "@/api/MyUserApi";
 type Props = {
   onCheckout: (userFormData: UserFormData) => void; // so the detailPage can get access to the data
   disabled: boolean;
+  isLoading: boolean; // so the button can show loading state
 }; 
-const CheckoutButton = ({ onCheckout, disabled }: Props) => {
+const CheckoutButton = ({ onCheckout, disabled, isLoading }: Props) => {
   const {
     isAuthenticated,
     isLoading: isAuthLoading,
@@ -37,7 +38,7 @@ const CheckoutButton = ({ onCheckout, disabled }: Props) => {
     );
   }
 
-  if (isAuthLoading || !currentUser) {
+  if (isAuthLoading || !currentUser || isLoading) {
     return <LoadingButton />;
   }
 
