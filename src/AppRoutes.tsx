@@ -7,21 +7,20 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import OrderStatusPage from "./pages/OrderStatusPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* <Layout>HOME PAGE</Layout> => Layout{children} */}
       <Route
         path="/"
         element={
           <Layout showHero>
-            {/* it is true, then UserProfilePage is false */}
             <HomePage />
           </Layout>
         }
       />
-      <Route path="auth-callback" element={<AuthCallbackPage />} />
+      <Route path="/auth-callback" element={<AuthCallbackPage />} />
       <Route
         path="/search/:city"
         element={
@@ -39,6 +38,14 @@ const AppRoutes = () => {
         }
       />
       <Route element={<ProtectedRoute />}>
+        <Route
+          path="/order-status"
+          element={
+            <Layout>
+              <OrderStatusPage />
+            </Layout>
+          }
+        />
         <Route
           path="/user-profile"
           element={

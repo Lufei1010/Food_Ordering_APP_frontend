@@ -1,12 +1,12 @@
 //similar to the schema in the backend
 export type User = {
-    _id: string;
-    email: string;
-    name: string; 
-    addressLine: string;
-    city: string;
-    country: string;
-}
+  _id: string;
+  email: string;
+  name: string;
+  addressLine: string;
+  city: string;
+  country: string;
+};
 
 export type MenuItem = {
   _id: string;
@@ -28,6 +28,34 @@ export type Restaurant = {
   lastUpdated: string;
 };
 
+export type OrderStatus =
+  | "placed"
+  | "paid"
+  | "inProgress"
+  | "outForDelivery"
+  | "delivered";
+
+export type Order = {
+  _id: string;
+  restaurant: Restaurant;
+  user: User;
+  cartItem: {
+    menuItemId: string;
+    name: string;
+    quantity: string;
+  }[];
+  deliveryDetails: {
+    name: string;
+    addressLine1: string;
+    city: string;
+    email: string;
+  };
+  totalAmount: number;
+  status: OrderStatus;
+  createdAt: string;
+  restaurantId: string;
+};
+
 export type RestaurantSearchResponse = {
   data: Restaurant[];
   pagination: {
@@ -35,5 +63,4 @@ export type RestaurantSearchResponse = {
     page: number;
     pages: number;
   }; //also defined on the backend. but for flexibility and individuality , created it here to.
-}
-
+};
